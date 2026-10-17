@@ -73,15 +73,22 @@ export default function EmployeeModal({ opened, employeeId, meta, onClose, onSav
               <>
                 <Divider label="Salary history" labelPosition="left" />
                 <Table.ScrollContainer minWidth={420} mah={200}>
-                  <Table fz="sm">
-                    <Table.Thead><Table.Tr><Table.Th>When</Table.Th><Table.Th ta="right">From</Table.Th><Table.Th ta="right">To</Table.Th><Table.Th>Reason</Table.Th></Table.Tr></Table.Thead>
+                  <Table fz="sm" highlightOnHover>
+                    <Table.Thead>
+                      <Table.Tr>
+                        <Table.Th style={{ color: '#0f172a' }}>When</Table.Th>
+                        <Table.Th ta="right" style={{ color: '#0f172a' }}>From</Table.Th>
+                        <Table.Th ta="right" style={{ color: '#0f172a' }}>To</Table.Th>
+                        <Table.Th style={{ color: '#0f172a' }}>Reason</Table.Th>
+                      </Table.Tr>
+                    </Table.Thead>
                     <Table.Tbody>
                       {history.map((h) => (
                         <Table.Tr key={h.id}>
-                          <Table.Td>{h.changedAt.slice(0, 10)}</Table.Td>
-                          <Table.Td ta="right">{h.oldSalary == null ? '—' : formatMoney(h.oldSalary, h.currency)}</Table.Td>
-                          <Table.Td ta="right">{formatMoney(h.newSalary, h.currency)}</Table.Td>
-                          <Table.Td><Text size="sm" c="dimmed">{h.reason ?? ''}</Text></Table.Td>
+                          <Table.Td fw={500} c="dark.8">{h.changedAt.slice(0, 10)}</Table.Td>
+                          <Table.Td ta="right" c="dark.8">{h.oldSalary == null ? '—' : formatMoney(h.oldSalary, h.currency)}</Table.Td>
+                          <Table.Td ta="right" fw={700} c="dark.9">{formatMoney(h.newSalary, h.currency)}</Table.Td>
+                          <Table.Td><Text size="sm" c="dark.7" fw={500}>{h.reason ?? ''}</Text></Table.Td>
                         </Table.Tr>
                       ))}
                     </Table.Tbody>

@@ -16,8 +16,8 @@ const PAGE_SIZE = 25;
 function SortTh({ field, sort, order, onSort, children, align }) {
   const active = sort === field;
   return (
-    <Table.Th ta={align}>
-      <UnstyledButton onClick={() => onSort(field)} fw={600} fz="sm">
+    <Table.Th ta={align} style={{ color: '#0f172a' }}>
+      <UnstyledButton onClick={() => onSort(field)} fw={700} fz="sm" c="dark.9">
         <Group gap={4} wrap="nowrap" justify={align === 'right' ? 'flex-end' : 'flex-start'}>
           {children}
           {active && (order === 'asc' ? <IconArrowUp size={14} /> : <IconArrowDown size={14} />)}
@@ -60,7 +60,7 @@ export default function EmployeesPage() {
   function confirmDelete(e) {
     modals.openConfirmModal({
       title: 'Delete employee?',
-      children: <Text size="sm">This permanently removes <b>{e.fullName}</b> and their salary history.</Text>,
+      children: <Text size="sm" c="dark.8">This permanently removes <b>{e.fullName}</b> and their salary history.</Text>,
       labels: { confirm: 'Delete', cancel: 'Cancel' },
       confirmProps: { color: 'red' },
       onConfirm: async () => {
@@ -79,16 +79,16 @@ export default function EmployeesPage() {
     <Stack gap="md">
       <Group justify="space-between">
         <div>
-          <Title order={2}>Employees</Title>
-          <Text c="dimmed" size="sm">{data ? `${formatNumber(data.total)} matching employees` : 'Loading…'}</Text>
+          <Title order={2} c="dark.9">Employees</Title>
+          <Text c="gray.7" size="sm" fw={500}>{data ? `${formatNumber(data.total)} matching employees` : 'Loading…'}</Text>
         </div>
         <Group>
-          <Button component="a" href={api.exportUrl({ ...params, sort, order })} variant="default" leftSection={<IconDownload size={16} />}>Export CSV</Button>
+          <Button component="a" href={api.exportUrl({ ...params, sort, order })} variant="default" leftSection={<IconDownload size={16} />} style={{ color: '#0f172a', fontWeight: 600 }}>Export CSV</Button>
           <Button leftSection={<IconPlus size={16} />} onClick={() => setModal({ opened: true, id: null })}>Add employee</Button>
         </Group>
       </Group>
 
-      <Paper withBorder p="md">
+      <Paper withBorder p="md" bg="white" shadow="xs">
         <Group align="flex-end">
           <TextInput placeholder="Search name or email" leftSection={<IconSearch size={16} />} value={search} onChange={(e) => { setSearch(e.currentTarget.value); setPage(1); }} w={240} aria-label="Search" />
           <Select placeholder="Country" clearable data={meta.countries.map((c) => ({ value: c.code, label: c.name }))} value={country} onChange={resetPage(setCountry)} w={160} aria-label="Country" />
@@ -101,7 +101,7 @@ export default function EmployeesPage() {
 
       {error && <Alert color="red" title="Could not load employees">{error.message}. Is the API running?</Alert>}
 
-      <Paper withBorder style={{ opacity: loading ? 0.6 : 1 }}>
+      <Paper withBorder bg="white" shadow="xs" style={{ opacity: loading ? 0.6 : 1 }}>
         <Table.ScrollContainer minWidth={900}>
           <Table highlightOnHover verticalSpacing="xs">
             <Table.Thead>
@@ -110,7 +110,7 @@ export default function EmployeesPage() {
                 <SortTh field="jobTitle" {...{ sort, order, onSort }}>Job title</SortTh>
                 <SortTh field="department" {...{ sort, order, onSort }}>Department</SortTh>
                 <SortTh field="country" {...{ sort, order, onSort }}>Country</SortTh>
-                <Table.Th ta="right">Salary (local)</Table.Th>
+                <Table.Th ta="right" style={{ color: '#0f172a' }}>Salary (local)</Table.Th>
                 <SortTh field="salaryUsd" align="right" {...{ sort, order, onSort }}>Salary (USD)</SortTh>
                 <Table.Th />
               </Table.Tr>
@@ -118,22 +118,22 @@ export default function EmployeesPage() {
             <Table.Tbody>
               {(data?.items ?? []).map((e) => (
                 <Table.Tr key={e.id}>
-                  <Table.Td><Text fw={500} size="sm">{e.fullName}</Text><Text size="xs" c="dimmed">{e.email}</Text></Table.Td>
-                  <Table.Td>{e.jobTitle}</Table.Td>
-                  <Table.Td>{e.department}</Table.Td>
-                  <Table.Td>{e.country}</Table.Td>
-                  <Table.Td ta="right">{formatMoney(e.salary, e.currency)}</Table.Td>
-                  <Table.Td ta="right" fw={600}>{formatUsd(e.salaryUsd)}</Table.Td>
+                  <Table.Td><Text fw={600} size="sm" c="dark.9">{e.fullName}</Text><Text size="xs" c="gray.7" fw={500}>{e.email}</Text></Table.Td>
+                  <Table.Td c="dark.8" fw={500}>{e.jobTitle}</Table.Td>
+                  <Table.Td c="dark.8" fw={500}>{e.department}</Table.Td>
+                  <Table.Td c="dark.8" fw={500}>{e.country}</Table.Td>
+                  <Table.Td ta="right" c="dark.8" fw={500}>{formatMoney(e.salary, e.currency)}</Table.Td>
+                  <Table.Td ta="right" fw={700} c="dark.9">{formatUsd(e.salaryUsd)}</Table.Td>
                   <Table.Td>
-                    <Group gap={4} justify="flex-end" wrap="nowrap">
-                      <ActionIcon variant="subtle" aria-label={`Edit ${e.fullName}`} onClick={() => setModal({ opened: true, id: e.id })}><IconPencil size={16} /></ActionIcon>
-                      <ActionIcon variant="subtle" color="red" aria-label={`Delete ${e.fullName}`} onClick={() => confirmDelete(e)}><IconTrash size={16} /></ActionIcon>
+                    <Group gap={6} justify="flex-end" wrap="nowrap">
+                      <ActionIcon variant="light" color="indigo" aria-label={`Edit ${e.fullName}`} onClick={() => setModal({ opened: true, id: e.id })}><IconPencil size={16} /></ActionIcon>
+                      <ActionIcon variant="light" color="red" aria-label={`Delete ${e.fullName}`} onClick={() => confirmDelete(e)}><IconTrash size={16} /></ActionIcon>
                     </Group>
                   </Table.Td>
                 </Table.Tr>
               ))}
               {data && data.items.length === 0 && (
-                <Table.Tr><Table.Td colSpan={7}><Text ta="center" c="dimmed" py="xl">No employees match these filters.</Text></Table.Td></Table.Tr>
+                <Table.Tr><Table.Td colSpan={7}><Text ta="center" c="gray.7" fw={500} py="xl">No employees match these filters.</Text></Table.Td></Table.Tr>
               )}
             </Table.Tbody>
           </Table>

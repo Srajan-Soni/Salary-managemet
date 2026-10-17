@@ -1,17 +1,24 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  color-scheme: light;
+
+  /* Mantine CSS variable overrides for high contrast and dark legible text */
+  --mantine-color-text: #0f172a;
+  --mantine-color-body: #f8fafc;
+  --mantine-color-dimmed: #334155;
+  --mantine-color-placeholder: #475569;
 }
-body { margin: 0; }
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
 html {
   height: 100%;
+  color-scheme: light;
 }
 
 html,
@@ -21,20 +28,15 @@ body {
 }
 
 body {
+  margin: 0;
   min-height: 100%;
   display: flex;
   flex-direction: column;
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  color: #0f172a;
+  background-color: #f8fafc;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
 }
 
 a {
@@ -42,8 +44,61 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+/* Ensure all headings and titles are crisp dark slate */
+h1, h2, h3, h4, h5, h6,
+.mantine-Title-root {
+  color: #0f172a !important;
+}
+
+/* High contrast table styling */
+th, .mantine-Table-th {
+  color: #0f172a !important;
+  font-weight: 700 !important;
+}
+
+td, .mantine-Table-td {
+  color: #1e293b !important;
+}
+
+/* Input labels, inputs, and placeholders */
+.mantine-InputWrapper-label, label {
+  color: #0f172a !important;
+  font-weight: 600 !important;
+}
+
+.mantine-Input-input {
+  color: #0f172a !important;
+  font-weight: 500;
+}
+
+.mantine-Input-input::placeholder {
+  color: #64748b !important;
+  opacity: 1;
+}
+
+/* Table sort headers */
+.mantine-Table-th button,
+.mantine-Table-th .mantine-UnstyledButton-root {
+  color: #0f172a !important;
+  font-weight: 700 !important;
+}
+
+/* Chart text / axis labels / legends */
+.recharts-cartesian-axis-tick text,
+.recharts-text,
+.recharts-label {
+  fill: #1e293b !important;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.recharts-legend-item-text {
+  color: #0f172a !important;
+  font-weight: 600;
+}
+
+/* Dimmed / muted text overrides to ensure readability */
+.mantine-Text-dimmed,
+[data-dimmed] {
+  color: #334155 !important;
 }

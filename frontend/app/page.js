@@ -9,10 +9,10 @@ import { bucketLabel, formatNumber, formatUsd } from '@/lib/format';
 
 function Kpi({ label, value, hint }) {
   return (
-    <Paper withBorder p="md">
-      <Text size="xs" c="dimmed" tt="uppercase" fw={600}>{label}</Text>
-      <Text fz={26} fw={700} mt={4}>{value}</Text>
-      {hint && <Text size="xs" c="dimmed">{hint}</Text>}
+    <Paper withBorder p="md" bg="white" shadow="xs">
+      <Text size="xs" c="gray.7" tt="uppercase" fw={700} style={{ letterSpacing: '0.04em' }}>{label}</Text>
+      <Text fz={26} fw={800} mt={4} c="dark.9">{value}</Text>
+      {hint && <Text size="xs" c="gray.7" fw={500}>{hint}</Text>}
     </Paper>
   );
 }
@@ -39,8 +39,8 @@ export default function InsightsPage() {
     <Stack gap="lg">
       <Group justify="space-between" align="flex-end">
         <div>
-          <Title order={2}>How we pay people</Title>
-          <Text c="dimmed" size="sm">All figures are annual base salary, normalised to USD so countries can be compared.</Text>
+          <Title order={2} c="dark.9">How we pay people</Title>
+          <Text c="gray.7" size="sm" fw={500}>All figures are annual base salary, normalised to USD so countries can be compared.</Text>
         </div>
         <Group>
           <Select placeholder="All countries" clearable data={meta.countries.map((c) => ({ value: c.code, label: c.name }))} value={country} onChange={setCountry} aria-label="Country" />
@@ -57,9 +57,9 @@ export default function InsightsPage() {
         <Kpi label="Typical range (P10–P90)" value={s ? `${formatUsd(s.p10, { compact: true })}–${formatUsd(s.p90, { compact: true })}` : '…'} hint={s ? `Min ${formatUsd(s.min, { compact: true })} · Max ${formatUsd(s.max, { compact: true })}` : ''} />
       </SimpleGrid>
 
-      <Paper withBorder p="md">
+      <Paper withBorder p="md" bg="white" shadow="xs">
         <Group justify="space-between" mb="md">
-          <Title order={4}>Pay by</Title>
+          <Title order={4} c="dark.9">Pay by</Title>
           <SegmentedControl value={by} onChange={setBy} data={Object.entries(BY_LABEL).map(([value, l]) => ({ value, label: l }))} />
         </Group>
         {breakdown.loading && !breakdown.data ? <Loader size="sm" /> : (
@@ -69,7 +69,7 @@ export default function InsightsPage() {
               data={(breakdown.data?.rows ?? []).map((r) => ({ name: label(r.key), Median: r.median, Average: r.avg }))}
               dataKey="name"
               orientation="vertical"
-              series={[{ name: 'Median', color: 'indigo.6' }, { name: 'Average', color: 'teal.4' }]}
+              series={[{ name: 'Median', color: 'indigo.8' }, { name: 'Average', color: 'teal.8' }]}
               valueFormatter={(v) => formatUsd(v)}
               yAxisProps={{ width: 150 }}
               withLegend
@@ -78,25 +78,25 @@ export default function InsightsPage() {
               <Table striped highlightOnHover>
                 <Table.Thead>
                   <Table.Tr>
-                    <Table.Th>{BY_LABEL[by]}</Table.Th>
-                    <Table.Th ta="right">Headcount</Table.Th>
-                    <Table.Th ta="right">Min</Table.Th>
-                    <Table.Th ta="right">Median</Table.Th>
-                    <Table.Th ta="right">Average</Table.Th>
-                    <Table.Th ta="right">P90</Table.Th>
-                    <Table.Th ta="right">Max</Table.Th>
+                    <Table.Th style={{ color: '#0f172a' }}>{BY_LABEL[by]}</Table.Th>
+                    <Table.Th ta="right" style={{ color: '#0f172a' }}>Headcount</Table.Th>
+                    <Table.Th ta="right" style={{ color: '#0f172a' }}>Min</Table.Th>
+                    <Table.Th ta="right" style={{ color: '#0f172a' }}>Median</Table.Th>
+                    <Table.Th ta="right" style={{ color: '#0f172a' }}>Average</Table.Th>
+                    <Table.Th ta="right" style={{ color: '#0f172a' }}>P90</Table.Th>
+                    <Table.Th ta="right" style={{ color: '#0f172a' }}>Max</Table.Th>
                   </Table.Tr>
                 </Table.Thead>
                 <Table.Tbody>
                   {(breakdown.data?.rows ?? []).map((r) => (
                     <Table.Tr key={r.key}>
-                      <Table.Td>{label(r.key)}</Table.Td>
-                      <Table.Td ta="right">{formatNumber(r.headcount)}</Table.Td>
-                      <Table.Td ta="right">{formatUsd(r.min)}</Table.Td>
-                      <Table.Td ta="right" fw={600}>{formatUsd(r.median)}</Table.Td>
-                      <Table.Td ta="right">{formatUsd(r.avg)}</Table.Td>
-                      <Table.Td ta="right">{formatUsd(r.p90)}</Table.Td>
-                      <Table.Td ta="right">{formatUsd(r.max)}</Table.Td>
+                      <Table.Td fw={600} c="dark.9">{label(r.key)}</Table.Td>
+                      <Table.Td ta="right" c="dark.8" fw={500}>{formatNumber(r.headcount)}</Table.Td>
+                      <Table.Td ta="right" c="dark.8" fw={500}>{formatUsd(r.min)}</Table.Td>
+                      <Table.Td ta="right" fw={700} c="dark.9">{formatUsd(r.median)}</Table.Td>
+                      <Table.Td ta="right" c="dark.8" fw={500}>{formatUsd(r.avg)}</Table.Td>
+                      <Table.Td ta="right" c="dark.8" fw={500}>{formatUsd(r.p90)}</Table.Td>
+                      <Table.Td ta="right" c="dark.8" fw={500}>{formatUsd(r.max)}</Table.Td>
                     </Table.Tr>
                   ))}
                 </Table.Tbody>
@@ -106,13 +106,13 @@ export default function InsightsPage() {
         )}
       </Paper>
 
-      <Paper withBorder p="md">
-        <Title order={4} mb="md">Salary distribution</Title>
+      <Paper withBorder p="md" bg="white" shadow="xs">
+        <Title order={4} mb="md" c="dark.9">Salary distribution</Title>
         <BarChart
           h={260}
           data={(dist.data?.bins ?? []).map((b) => ({ range: bucketLabel(b), Employees: b.count }))}
           dataKey="range"
-          series={[{ name: 'Employees', color: 'indigo.5' }]}
+          series={[{ name: 'Employees', color: 'indigo.8' }]}
           valueFormatter={formatNumber}
           xAxisProps={{ interval: 0, angle: -30, textAnchor: 'end', height: 60 }}
         />

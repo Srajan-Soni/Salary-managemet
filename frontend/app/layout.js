@@ -12,9 +12,9 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" data-mantine-color-scheme="light" style={{ colorScheme: 'light' }} suppressHydrationWarning>
       <head>
-        <ColorSchemeScript defaultColorScheme="light" />
+        <ColorSchemeScript defaultColorScheme="light" forceColorScheme="light" />
       </head>
       <body>
         <Providers>{children}</Providers>

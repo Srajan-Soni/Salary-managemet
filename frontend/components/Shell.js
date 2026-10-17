@@ -16,14 +16,27 @@ export default function Shell({ children }) {
       <AppShell.Header>
         <Group h="100%" px="lg" justify="space-between">
           <Group gap="xs">
-            <Title order={4}>ACME Salary Manager</Title>
-            <Badge variant="light" size="sm">HR</Badge>
+            <Title order={4} c="dark.9" fw={800}>ACME Salary Manager</Title>
+            <Badge variant="filled" color="indigo" size="sm">HR</Badge>
           </Group>
           <Group gap="lg">
             {links.map(({ href, label, icon: Icon }) => {
               const active = href === '/' ? path === '/' : path.startsWith(href);
               return (
-                <Anchor key={href} component={Link} href={href} fw={active ? 700 : 500} underline="never" c={active ? 'indigo' : 'dimmed'}>
+                <Anchor
+                  key={href}
+                  component={Link}
+                  href={href}
+                  fw={active ? 700 : 600}
+                  underline="never"
+                  c={active ? 'indigo.8' : 'gray.8'}
+                  style={{
+                    padding: '6px 10px',
+                    borderRadius: '6px',
+                    transition: 'all 150ms ease',
+                    backgroundColor: active ? 'rgba(79, 70, 229, 0.08)' : 'transparent',
+                  }}
+                >
                   <Group gap={6}><Icon size={18} />{label}</Group>
                 </Anchor>
               );
