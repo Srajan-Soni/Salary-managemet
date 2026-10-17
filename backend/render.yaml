@@ -1,0 +1,15 @@
+# Render Blueprint: deploys the API. The UI goes to Vercel (see README).
+services:
+  - type: web
+    name: salary-manager-api
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    healthCheckPath: /api/health
+    envVars:
+      - key: AUTO_SEED
+        value: "true"
+      - key: DB_PATH
+        value: /tmp/salary.db   # ephemeral on free tier; re-seeds on boot. Use a disk for real persistence.
+      - key: CORS_ORIGIN
+        sync: false             # set to your Vercel URL
